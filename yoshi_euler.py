@@ -521,6 +521,10 @@ def problem0097(digits=10):
     m = 10 ** digits
     return (28433 * pow(2, 7830457, m) + 1) % m
 
+def problem0216():
+    tn = (2 * n * n - 1 for n in range(2, 50000001))
+    return sum(1 for t in tn if is_prime(t))
+
 def problem0243():
     cutoff = Fraction(15499, 94744)
     p = primes(100)

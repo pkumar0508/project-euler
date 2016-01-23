@@ -60,3 +60,30 @@ def factorize(n, p):
             d[p[k]] = c
         k = k + 1
     return d
+
+def miller_rabin_helper(a, d, s, n):
+    print n
+    base = pow(a, d, n)
+    yield base == 1
+    for r in range(s):
+        yield base == n - 1
+        base = pow(base, 2, n)
+
+def is_prime(n):
+    # only correct for n < 2**64
+    primes12 = ( 2,  3,  5,  7,
+                11, 13, 17, 19,
+                23, 29, 31, 37)
+    if n in primes12:
+        return True
+    if n % 2 == 0:
+        return False
+
+    d, s = n - 1, 0
+    while d % 2 == 0:
+        d, s = d // 2, s + 1
+
+    for a in primes12:
+        if not any(miller_rabin_helper(a, d, s, n)):
+            return False
+    return True
